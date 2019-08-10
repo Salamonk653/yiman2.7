@@ -14,7 +14,7 @@ class Language(models.Model):
         db_table = u'Тил'
         verbose_name = u'Тил'
         verbose_name_plural = u'Тилдер'
-        ordering = ['-id']
+        ordering = [u'-id']
 
     name = models.CharField(verbose_name=u'Аты', max_length=80, blank=True, null=True, default=None)
 
@@ -27,15 +27,15 @@ class Category(models.Model):
         db_table = u'Category'
         verbose_name = u'Категория'
         verbose_name_plural = u'Категориялар'
-        ordering = ['-id']
+        ordering = [u'-id']
 
     name = models.CharField(verbose_name=u'Аты', max_length=80, blank=True, null=True, default=None)
     slug = models.CharField(verbose_name=u'Транслит', max_length=200, blank=True)
 
     def get_absolute_url(self):
-        return reverse('category_detail', kwargs={'slug': self.slug})
+        return reverse(u'category_detail', kwargs={u'slug': self.slug})
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 
@@ -43,7 +43,7 @@ class New(models.Model):
     class Meta:
         verbose_name_plural = u'Жаңылыктар'
         verbose_name = u'Жаңылык'
-        ordering = ['-id']
+        ordering = [u'-id']
 
     category = models.ForeignKey(Category, verbose_name=u'Категория',
                                  default=1, on_delete=models.CASCADE,
@@ -51,7 +51,7 @@ class New(models.Model):
     language = models.ForeignKey(Language, verbose_name=u'Тили', on_delete=models.CASCADE)
     name = models.CharField(verbose_name=u'Макаланын аталышы', db_index=True, max_length=255)
     slug = models.CharField(verbose_name=u'Транслит', max_length=200, blank=True)
-    image = models.ImageField(verbose_name=u'Сүрөт', upload_to='news/', blank=True, null=True)
+    image = models.ImageField(verbose_name=u'Сүрөт', upload_to=u'news/', blank=True, null=True)
     text = RichTextUploadingField(verbose_name=u'Маалымат')
     likes = models.PositiveIntegerField(default=0)
     dislikes = models.PositiveIntegerField(default=0)
@@ -61,16 +61,19 @@ class New(models.Model):
     is_public = models.BooleanField(default=True)
 
     def get_absolute_url(self):
-        return reverse('article_detail', kwargs={'slug': self.slug})
+        return reverse(u'article_detail', kwargs={u'slug': self.slug})
 
     def image_tag(self):
         return mark_safe('<img src="%s" width="150" height="150" />' % (self.image.url))
 
-    image_tag.short_description = 'Сүрөт'
+    image_tag.short_description = u'Сүрөт'
 
     def delete(self, *args, **kwargs):
         self.image.delete(save=False)
         super(New, self).delete(*args, **kwargs)
+
+    def __unicode__(self):
+        return self.name
 
 
 class Kairymduuluk(models.Model):
@@ -86,7 +89,7 @@ class Kairymduuluk(models.Model):
     suu_chygaruu = models.IntegerField(verbose_name=u'Суу чыгарууга', default=0)
     text = RichTextUploadingField(verbose_name=u'Маалымат')
 
-    def __str__(self):
+    def __unicode__(self):
         return str(self.id)
 
 
@@ -102,7 +105,7 @@ class Fon(models.Model):
     foto = models.ImageField(verbose_name=u'Фотогаларея', upload_to='ofonde/')
     media = models.ImageField(verbose_name=u'Медиа', upload_to='ofonde/')
 
-    def __str__(self):
+    def __unicode__(self):
         return str(self.id)
 
 
@@ -122,7 +125,7 @@ class OFonde(models.Model):
     youtube = models.CharField(verbose_name=u'Ютуб', max_length=250, blank=True, null=True)
     language = models.ForeignKey(Language, verbose_name=u'Тили', on_delete=models.CASCADE)
 
-    def __str__(self):
+    def __unicode__(self):
         return str(self.id)
 
 
@@ -139,7 +142,7 @@ class Slider(models.Model):
     def image_tag(self):
         return mark_safe('<img src="%s" width="150" height="150" />' % (self.fon.url))
 
-    image_tag.short_description = 'Сүрөт'
+    image_tag.short_description = u'Сүрөт'
 
 
 class Fondjonundo(models.Model):
@@ -153,5 +156,5 @@ class Fondjonundo(models.Model):
     name = models.CharField(verbose_name=u'Аты', max_length=100)
     text = RichTextUploadingField(verbose_name=u'Багыттар', blank=True, null=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name

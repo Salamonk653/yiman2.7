@@ -24,7 +24,7 @@ class Album(models.Model):
     is_public = models.BooleanField(verbose_name=u'Көрүнсүн', default=True)
     created = models.DateTimeField(verbose_name=u'Дата', default=timezone.now, null=True, blank=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
     def image_tag(self):
@@ -56,7 +56,7 @@ class Image(models.Model):
     def image_tag(self):
         return mark_safe('<img src="%s" width="150" height="150" />' % (self.image.url))
 
-    image_tag.short_description = 'Сүрөт'
+    image_tag.short_description = u'Сүрөт'
 
     def delete(self, *args, **kwargs):
         self.image.delete(save=False)
@@ -64,6 +64,9 @@ class Image(models.Model):
 
     def get_absolute_url(self):
         return reverse('photo_detail', kwargs={'id': self.id})
+
+    def __unicode__(self):
+        return self.album.name
 
 
 class Video(models.Model):
@@ -83,9 +86,9 @@ class Video(models.Model):
     def image_tag(self):
         return mark_safe('<img src="%s" width="150" height="150" />' % (self.oblojka.url))
 
-    image_tag.short_description = 'Сүрөт'
+    image_tag.short_description = u'Сүрөт'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 
@@ -105,7 +108,7 @@ class Media(models.Model):
     def image_tag(self):
         return mark_safe('<img src="%s" width="150" height="150" />' % (self.oblojka.url))
 
-    image_tag.short_description = 'Сүрөт'
+    image_tag.short_description = u'Сүрөт'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name

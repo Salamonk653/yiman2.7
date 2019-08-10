@@ -15,9 +15,9 @@ class News(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(News, self).get_context_data(**kwargs)
         context['article'] = New.objects.first()
-        context['volonterlor'] = Image.objects.filter(album__name__icontains='Волонтерлор',
+        context['volonterlor'] = Image.objects.filter(album__name__icontains=u'Волонтерлор',
                                                        is_public=True).order_by('-id')[:8]
-        context['news'] = New.objects.filter(category__name__iexact='Жаңылыктар', language__name__icontains='ru',
+        context['news'] = New.objects.filter(category__name__iexact=u'Жаңылыктар', language__name__icontains='ru',
                                              is_public=True).order_by('-id')[:4]
         context['fond'] = Fondjonundo.objects.filter(language__name__icontains='ru')
         context['ofonde'] = OFonde.objects.filter(language__name__icontains='ru').first()
@@ -37,7 +37,7 @@ class NewsList(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(NewsList, self).get_context_data(**kwargs)
-        context['category'] = New.objects.filter(category__name='Жаңылыктар', language__name__icontains='ru').order_by('-id')
+        context['category'] = New.objects.filter(category__name=u'Жаңылыктар', language__name__icontains='ru').order_by('-id')
         context['ofonde'] = OFonde.objects.filter(language__name__icontains='ru').first()
         context['fon'] = Fon.objects.first()
         return context

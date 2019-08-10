@@ -11,12 +11,12 @@ from photo.models import *
 
 def HomePhoto(request):
     context = {}
-    images = Image.objects.filter(album__name__icontains='Волонтерлор', is_public=True).order_by('-id')
+    images = Image.objects.filter(album__name__icontains=u'Волонтерлор', is_public=True).order_by('-id')
     context['ofonde'] = OFonde.objects.filter(language__name__icontains='ru').first()
     context['fon'] = Fon.objects.first()
     paginator = Paginator(images, 25)
     page_number = request.GET.get('page', 1)
-    page = paginator.get_page(page_number)
+    page = paginator.page(page_number)
     context['page_obj'] = page
     return render(request, 'ru/volonter.html', context)
 
@@ -41,7 +41,7 @@ def ImageList(request, slug):
     images = album.image_set.filter(is_public=True).order_by('-id')
     paginator = Paginator(images, 25)
     page_number = request.GET.get('page', 1)
-    page = paginator.get_page(page_number)
+    page = paginator.page(page_number)
     context['album'] = album
     context['page_obj'] = page
     context['is_paginated'] = page.has_other_pages()

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+# Create your models here.
 from django.contrib import admin
 
 # Register your models here.
@@ -12,6 +14,7 @@ class SliderAdmin(admin.ModelAdmin):
     list_filter = ('language',)
     list_display = ['image_tag', 'fon', 'language']
     readonly_fields = ['image_tag']
+
 
 class NewAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}

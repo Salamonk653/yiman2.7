@@ -11,7 +11,7 @@ from photo.models import *
 
 def HomePhoto(request):
     context = {}
-    images = Image.objects.filter(album__name__icontains='Волонтерлор', is_public=True).order_by('-id')
+    images = Image.objects.filter(album__name__icontains=u'Волонтерлор', is_public=True).order_by('-id')
     context['fon'] = Fon.objects.first()
     context['ofonde'] = OFonde.objects.filter(language__name__icontains='kg').first()
     paginator = Paginator(images, 25)
