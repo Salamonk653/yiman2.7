@@ -175,12 +175,18 @@
                 </header>
                 <div class="w3-modal-content w3-margin">
                     <div class="w3-margin">
+                        {% load socialaccount %}
+
+
+
+
                         {% if user.is_authenticated %}
                             <div class="w3-card w3-margin">
 
+                                {% for ass in user.socialaccount_set.all %}
+                                    {% if ass.provider == "facebook" %}
 
-                                {% for ass in backends.associated %}
-                                    {% if ass.provider == 'facebook' %}
+
                                         <ul class="w3-ul w3-amber">
                                             <li class="">
                                                 <img src="{{ ass.extra_data.picture.data.url }}" alt="" width="50"
@@ -192,6 +198,7 @@
                                         </span>
                                             </li>
                                         </ul>
+
                                     {% endif %}
                                 {% endfor %}
 
@@ -199,9 +206,12 @@
                         {% else %}
                             <label class="w3-text-amber"><b>Cоц.акаунт аркылуу кириңиз</b></label>
                             <div class="w3-margin">
-                                <a href="{% url 'social:begin' 'facebook' %}" class="w3-button w3-card-8 w3-blue">Facebook</a>
+                                <a href="{% provider_login_url "facebook" method="oauth2" %}"
+                                   class="w3-button w3-card-8 w3-blue">Facebook</a>
+
                             </div>
                         {% endif %}
+
                     </div>
 
                 </div>
