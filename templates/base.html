@@ -83,12 +83,18 @@
             <h1 class="w3-amber karta">Сайттын картасы</h1>
             <hr class="w3-border-amber">
             <div class="w3-margin">
+                {% load socialaccount %}
+
+
+
+
                 {% if user.is_authenticated %}
                     <div class="w3-card w3-margin">
 
+                        {% for ass in user.socialaccount_set.all %}
+                            {% if ass.provider == "facebook" %}
 
-                        {% for ass in backends.associated %}
-                            {% if ass.provider == 'facebook' %}
+
                                 <ul class="w3-ul w3-amber">
                                     <li class="">
                                         <img src="{{ ass.extra_data.picture.data.url }}" alt="" width="50"
@@ -100,6 +106,7 @@
                                         </span>
                                     </li>
                                 </ul>
+
                             {% endif %}
                         {% endfor %}
 
@@ -107,10 +114,14 @@
                 {% else %}
                     <label class="w3-text-amber"><b>Cоц.акаунт аркылуу кириңиз</b></label>
                     <div class="w3-margin">
-                        <a href="{% url 'social:begin' 'facebook' %}" class="w3-button w3-card-8 w3-blue">Facebook</a>
+                        <a href="{% provider_login_url "facebook" method="oauth2" %}"
+                           class="w3-button w3-card-8 w3-blue">Facebook</a>
+
                     </div>
                 {% endif %}
+
             </div>
+
             <button class="w3-button w3-display-bottomright w3-amber" onclick="w3_close()"><i class="fa fa-remove"></i>
             </button>
             <a href="{% url 'category' %}" class="w3-bar-item w3-button    w3-hover-amber "
@@ -132,7 +143,7 @@
         </nav>
 
         {#Бул издоо формасы#}
-          <div id="id01" class="w3-modal w3-animate-opacity">
+        <div id="id01" class="w3-modal w3-animate-opacity">
             <div class="w3-modal-content w3-card-4">
                 <header class="w3-container w3-amber">
         <span onclick="document.getElementById('id01').style.display='none'"
@@ -144,13 +155,13 @@
                     <span class="closebtn" onclick="closeSearch()" title="Close Overlay">×</span>
                     <div class="overlay-content">
                         <form method="get" action="{% url 'search' %}">
-                             <input id="q" class=" w3-border w3-padding" name="q" type="text"
-                                       placeholder="Бул жерге жазыңыз..." style="width: 80%">
-                            <button style="vertical-align: top; height: 45px;" class="w3-button w3-amber w3-padding" type="submit"><i class="fa fa-search"></i></button>
+                            <input id="q" class=" w3-border w3-padding" name="q" type="text"
+                                   placeholder="Бул жерге жазыңыз..." style="width: 80%">
+                            <button style="vertical-align: top; height: 45px;" class="w3-button w3-amber w3-padding"
+                                    type="submit"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
                 </div>
-
 
 
             </div>

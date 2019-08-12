@@ -68,13 +68,20 @@
             <hr class="w3-border-amber">
             <h1 class="w3-amber karta">Карта сайта</h1>
             <hr class="w3-border-amber">
+
             <div class="w3-margin">
+                {% load socialaccount %}
+
+
+
+
                 {% if user.is_authenticated %}
                     <div class="w3-card w3-margin">
 
+                        {% for ass in user.socialaccount_set.all %}
+                            {% if ass.provider == "facebook" %}
 
-                        {% for ass in backends.associated %}
-                            {% if ass.provider == 'facebook' %}
+
                                 <ul class="w3-ul w3-amber">
                                     <li class="">
                                         <img src="{{ ass.extra_data.picture.data.url }}" alt="" width="50"
@@ -82,10 +89,11 @@
                                              style="border-radius: 50%">
                                         <span class="w3-large w3-center">{{ ass.extra_data.name }}</span>
                                         <span class="w3-right w3-margin-right w3-button w3-white w3-card-8 w3-round-large">
-                                            <a href="{% url 'logout' %}">Выход</a>
+                                            <a href="{% url 'logout' %}">Выйти</a>
                                         </span>
                                     </li>
                                 </ul>
+
                             {% endif %}
                         {% endfor %}
 
@@ -93,10 +101,14 @@
                 {% else %}
                     <label class="w3-text-amber"><b>Зайдите через соц.акаунт</b></label>
                     <div class="w3-margin">
-                        <a href="{% url 'social:begin' 'facebook' %}" class="w3-button w3-card-8 w3-blue">Facebook</a>
+                        <a href="{% provider_login_url "facebook" method="oauth2" %}"
+                           class="w3-button w3-card-8 w3-blue">Facebook</a>
+
                     </div>
                 {% endif %}
+
             </div>
+
 
             <button class="w3-button w3-display-bottomright w3-amber" onclick="w3_close()"><i
                     class="fa fa-remove"></i>

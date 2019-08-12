@@ -20,7 +20,7 @@ from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    url(r'^social-auth/', include('social_django.urls', namespace="social")),
+    url(r'^accounts/', include('allauth.urls')),
     url(r"^logout/", auth_views.LogoutView.as_view(), name="logout"),
     url(r'^admin/', admin.site.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
