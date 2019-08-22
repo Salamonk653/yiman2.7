@@ -105,7 +105,7 @@ def search(request):
 
     if q:
         # context['posts'] = PostDocument.search().query("match", name=q)
-        context['posts'] = New.objects.filter(name__icontains=q)
+        context['posts'] = New.objects.filter(name__icontains=q, language__name__icontains='kg')
     else:
         context['posts'] = ''
 

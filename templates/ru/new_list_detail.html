@@ -6,7 +6,7 @@
 {% block content %}
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous"
-            src="https://connect.facebook.net/ky_KG/sdk.js#xfbml=1&version=v3.3"></script>
+            src="https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v3.3"></script>
 
 
     <div class="w3-row-padding w3-content" style="max-width:1400px">
@@ -71,7 +71,7 @@
 
                 <ul class="w3-ul w3-hoverable w3-white">
                     {% for article in articles %}
-                        <a href="{{ article.get_absolute_url }}" style="width: 100%">
+                        <a href="{% url 'ru_article_detail' slug=article.slug %}" style="width: 100%">
                             <li class="w3-padding-16 w3-container">
                                 {% if article.image %}
                                     <img src="{{ article.image.url }}" alt="{{ article.name }}"

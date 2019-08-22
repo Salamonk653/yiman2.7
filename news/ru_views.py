@@ -106,10 +106,10 @@ def search(request):
 
     if q:
         # context['posts'] = PostDocument.search().query("match", name=q)
-        context['posts'] = New.objects.filter(name__icontains=q)
+        context['posts'] = New.objects.filter(name__icontains=q, language__name__icontains='ru')
     else:
         context['posts'] = ''
 
     context['ofonde'] = OFonde.objects.filter(language__name__icontains='ru').first()
     context['fon'] = Fon.objects.first()
-    return render(request, 'search/search.html', context)
+    return render(request, 'ru/search/search.html', context)
